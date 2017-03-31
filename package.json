@@ -1,0 +1,57 @@
+{
+  "name": "mui-redux-alerts",
+  "version": "0.1.0",
+  "description": "Material-UI + Redux Dialogs and Snackbars",
+  "main": "./lib/index.js",
+  "scripts": {
+    "clean": "rimraf lib",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "l": "eslint --init",
+    "lint": "eslint src test --ext jsx --ext js --color",
+    "prepublish": "npm run lint && npm run build",
+    "prebuild": "npm run clean",
+    "build": "cross-env BABEL_ENV=commonjs babel src --out-dir lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThadeuLuz/mui-redux-alerts.git"
+  },
+  "keywords": [
+    "Material-UI",
+    "Redux",
+    "React",
+    "Dialogs",
+    "Snackbars",
+    "Material-Design"
+  ],
+  "author": "Thadeu Luz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ThadeuLuz/mui-redux-alerts/issues"
+  },
+  "homepage": "https://github.com/ThadeuLuz/mui-redux-alerts#readme",
+  "dependencies": {},
+  "peerDependencies": {
+    "material-ui": "*",
+    "redux": "*",
+    "redux-thunk": "*"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.0",
+    "babel-eslint": "^7.2.1",
+    "babel-loader": "^6.4.1",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-latest": "^6.24.0",
+    "babel-preset-react": "^6.23.0",
+    "babel-preset-stage-0": "^6.22.0",
+    "cross-env": "^4.0.0",
+    "eslint": "^3.18.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.3",
+    "material-ui": "^0.17.1",
+    "react": "^15.4.2",
+    "rimraf": "^2.6.1"
+  }
+}

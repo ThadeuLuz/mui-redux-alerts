@@ -78,7 +78,7 @@ import { openDialog, openSnackbar, closeDialog, closeSnackbar } from 'mui-redux-
 dispatch(openSnackbar('simpleSnackbar', { message: 'Simple Snackbar' }));
 
 // ...or a function that returns the props.
-// This makes it easier to add buttons inside your dialog
+// This makes it easier to add close buttons inside your dialog
 const getProps = (closeMe) => ({
   title: 'Pain is an excellent teacher',
   children: 'Repetition is the path to mastery',

@@ -24,30 +24,30 @@ Material-UI and Redux are required for obvious reasons. Redux-thunk is needed to
 
 ## Usage
 
-### Add the Reducer to store
+### Add the Reducer to Redux store
 
-The first step is to add the reducer to your rootReducer when creating Redux's store (don't forget Redux Thunk).
-
+The first step is to add the reducer to your rootReducer when creating Redux's store.
 ```JavaScript
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
-import { reducer as alerts } from 'mui-redux-alerts';
+import { reducer } from 'mui-redux-alerts';
 
 const rootReducer = combineReducers({
-  // Add your other reducers here
-  alerts,
+  // Add other reducers here
+  alerts: reducer,
 });
 
+// Don't forget redux-thunk
 const store = createStore(rootReducer, applyMiddleware(thunk));
 ```
 
 ### Add the Alerts component to the tree
 
-The second step is to add the `Alerts` component somewhere in your app. Make sure this component is always visible because your snackbars and dialogs will be inside it in the dom tree. This component needs three properties: 
-  - The `alerts` object from your redux, created on the previous step
-  - Your Material UI `Dialog` component
-  - Your Material UI `Snackbar` component
+The second step is to add the `Alerts` component somewhere in your app. Make sure this component is always visible because your snackbars and dialogs will be inside it in the dom tree. This component needs three props: 
+  - `alert`: The `alerts` object from your redux, created on the previous step
+  - `dialog`: Your Material UI `Dialog` component
+  - `snackbar`: Your Material UI `Snackbar` component
 
 ```JavaScript
 import { connect } from 'react-redux';
@@ -56,8 +56,7 @@ import { Alerts } from 'mui-redux-alerts';
 import Dialog from 'material-ui/Dialog';
 import Snackbar from 'material-ui/Snackbar';
 
-const mapStateToProps = ({ alerts }) => ({ alerts });
-
+const mapStateToProps = (state) => ({ alerts: state.alerts });
 const ConnectedAlerts = connect(mapStateToProps)(Alerts)
 
 const App = () => (
@@ -75,22 +74,22 @@ The last step is to just dispatch `openDialog`, `openSnackbar`, `closeDialog`, `
 ```JavaScript
 import { openDialog, openSnackbar, closeDialog, closeSnackbar } from 'mui-redux-alerts';
 
-// You can pass an object...
+// You can pass a props object...
 dispatch(openSnackbar('simpleSnackbar', { message: 'Simple Snackbar' }));
 
-// ...or a function...
-const getProps = (key) => ({
+// ...or a function that returns the props.
+// This makes it easier to add buttons inside your dialog
+const getProps = (closeMe) => ({
   title: 'Pain is an excellent teacher',
   children: 'Repetition is the path to mastery',
   actions: [
-    <FlatButton label="OK" onTouchTap={ () => { dispatch(closeDialog(key)); } />
+    <FlatButton label="OK" onTouchTap={ () => { closeMe(); } />
   ],
 });
 
-// ... for the props for your component
 dispatch(openDialog('customDialog', getProps));
 
-// Close them manually with their key
+// You can also close them manually using the key
 dispatch(closeSnackbar('simpleSnackbar'));
 dispatch(closeDialog('customDialog'));
 ```
@@ -98,6 +97,10 @@ dispatch(closeDialog('customDialog'));
 ## Example
 
 Check the example folder on this repo.
+
+## Known issues
+
+Since the elements are shown and hidden by being mounted/unmounted, no animation is shown. I'll fix this on the next version.
 
 ## License
 

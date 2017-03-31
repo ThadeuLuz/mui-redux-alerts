@@ -20,9 +20,11 @@ This library has three peer dependencies that need to be in your project for it 
 $ npm i -S material-ui redux redux-thunk
 ```
 
-Material-UI and Redux are required for obvious reasons. Redux-thunk is needed to dispatch close actions asynchronously when snackbar's _autoHideDuration_ ends or when _onRequestClose_ gets triggered, which makes it a lot simpler to use.
+Material-UI and Redux are required for obvious reasons. Redux-thunk is needed to dispatch close actions asynchronously when snackbar's _autoHideDuration_ ends or when _onRequestClose_ gets triggered, which makes this library easier to use.
 
 ## Usage
+
+### Add the Reducer to store
 
 The first step is to add the reducer to your rootReducer when creating Redux's store (don't forget Redux Thunk).
 
@@ -39,6 +41,8 @@ const rootReducer = combineReducers({
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 ```
+
+### Add the Alerts component to the tree
 
 The second step is to add the `Alerts` component somewhere in your app. Make sure this component is always visible because your snackbars and dialogs will be inside it in the dom tree. This component needs three properties: 
   - The `alerts` object from your redux, created on the previous step
@@ -63,6 +67,8 @@ const App = () => (
   </div>
 );
 ```
+
+### Dispatch actions to open and close dialogs and snackbars
 
 The last step is to just dispatch `openDialog`, `openSnackbar`, `closeDialog`, `closeSnackbar` actions as needed.
 

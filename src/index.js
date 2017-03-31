@@ -1,3 +1,5 @@
+export { default as Alerts } from './Alerts';
+
 export {
   reducer,
   openDialog,
@@ -5,5 +7,3 @@ export {
   closeDialog,
   closeSnackbar,
 } from './redux.js';
-
-export Alerts from './Alerts.jsx';

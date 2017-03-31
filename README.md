@@ -53,16 +53,13 @@ The second step is to add the `Alerts` component somewhere in your app. Make sur
 import { connect } from 'react-redux';
 import { Alerts } from 'mui-redux-alerts';
 
-import Dialog from 'material-ui/Dialog';
-import Snackbar from 'material-ui/Snackbar';
-
 const mapStateToProps = (state) => ({ alerts: state.alerts });
 const ConnectedAlerts = connect(mapStateToProps)(Alerts)
 
 const App = () => (
   <div>
     // The rest of your app
-    <ConnectedAlerts dialog={Dialog} snackbar={Snackbar} />
+    <ConnectedAlerts />
   </div>
 );
 ```

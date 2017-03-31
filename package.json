@@ -6,7 +6,6 @@
   "scripts": {
     "clean": "rimraf lib",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "l": "eslint --init",
     "lint": "eslint src test --ext jsx --ext js --color",
     "prepublish": "npm run lint && npm run build",
     "prebuild": "npm run clean",

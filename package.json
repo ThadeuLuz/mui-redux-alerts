@@ -9,7 +9,8 @@
     "lint": "eslint src test --ext jsx --ext js --color",
     "prepublish": "npm run lint && npm run build",
     "prebuild": "npm run clean",
-    "build": "cross-env BABEL_ENV=commonjs babel src --out-dir lib"
+    "build": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
+    "postbuild": "rimraf example/lib/ && cp -R lib/ example/lib/"
   },
   "repository": {
     "type": "git",

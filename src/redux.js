@@ -1,4 +1,7 @@
-// Action Types
+//
+// Constants
+// ----------------------------------------------------------------------------
+
 const OPEN_SNACKBAR = '@@mui-redux-alerts/OPEN_SNACKBAR';
 const OPEN_DIALOG = '@@mui-redux-alerts/OPEN_DIALOG';
 const CLOSE_SNACKBAR = '@@mui-redux-alerts/CLOSE_SNACKBAR';
@@ -9,7 +12,10 @@ const initialState = {
   dialogs: {},
 };
 
+//
 // Reducer
+// ----------------------------------------------------------------------------
+
 export const reducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case OPEN_SNACKBAR:
@@ -35,7 +41,53 @@ export const reducer = (state = initialState, action = {}) => {
   }
 };
 
+//
+// Helper Functions
+// ----------------------------------------------------------------------------
+
+let count = 0;
+
+/**
+ * Gets keys, props and a close function
+ */
+const getKeyProps = (first, second, dispatch, closeAction) => {
+  let key;
+  let propsOrGetProps;
+
+  // Define key and pogp
+  if (typeof first === 'string') {
+    key = first;
+    propsOrGetProps = second;
+  } else {
+    count += 1;
+    key = `Snackbar_${count}`;
+    propsOrGetProps = first;
+  }
+
+  const close = () => {
+    dispatch(closeAction(key));
+  };
+
+  const props = typeof propsOrGetProps === 'function' ? propsOrGetProps(close, key) : propsOrGetProps;
+
+  // Set default props
+  props.timestamp = Date.now();
+  props.open = true;
+
+  // onRequestClose monkey patch
+  const originalOnRequestClose = props.onRequestClose;
+  props.onRequestClose = (buttonClicked) => {
+    close();
+    if (originalOnRequestClose) originalOnRequestClose(buttonClicked);
+  };
+
+  return { key, props };
+};
+
+//
 // Action Creators
+// ----------------------------------------------------------------------------
+
 export const closeSnackbar = key => ({
   type: CLOSE_SNACKBAR,
   payload: { key },
@@ -46,47 +98,12 @@ export const closeDialog = key => ({
   payload: { key },
 });
 
-export const openSnackbar = (key, getProps) => (dispatch) => {
-  const closeMe = () => {
-    dispatch(closeSnackbar(key));
-  };
-
-  const props = typeof getProps === 'function' ? getProps(closeMe, key) : getProps;
-  props.timestamp = Date.now();
-  props.open = true;
-
-
-  // onRequestClose monkey patch
-  const originalOnRequestClose = props.onRequestClose;
-  props.onRequestClose = (buttonClicked) => {
-    closeMe();
-    if (originalOnRequestClose) originalOnRequestClose(buttonClicked);
-  };
-
-  dispatch({
-    type: OPEN_SNACKBAR,
-    payload: { key, props },
-  });
+export const openSnackbar = (keyOrPropsOrGetProps, propsOrGetProps) => (dispatch) => {
+  const payload = getKeyProps(keyOrPropsOrGetProps, propsOrGetProps, dispatch, closeSnackbar);
+  dispatch({ type: OPEN_SNACKBAR, payload });
 };
 
-export const openDialog = (key, getProps) => (dispatch) => {
-  const closeMe = () => {
-    dispatch(closeDialog(key));
-  };
-
-  const props = typeof getProps === 'function' ? getProps(closeMe, key) : getProps;
-  props.timestamp = Date.now();
-  props.open = true;
-
-  // onRequestClose monkey patch
-  const originalOnRequestClose = props.onRequestClose;
-  props.onRequestClose = (buttonClicked) => {
-    closeMe();
-    if (originalOnRequestClose) originalOnRequestClose(buttonClicked);
-  };
-
-  dispatch({
-    type: OPEN_DIALOG,
-    payload: { key, props },
-  });
+export const openDialog = (keyOrPropsOrGetProps, propsOrGetProps) => (dispatch) => {
+  const payload = getKeyProps(keyOrPropsOrGetProps, propsOrGetProps, dispatch, closeDialog);
+  dispatch({ type: OPEN_DIALOG, payload });
 };

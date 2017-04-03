@@ -51,7 +51,9 @@ export const openSnackbar = (key, getProps) => (dispatch) => {
     dispatch(closeSnackbar(key));
   };
 
-  const props = typeof getProps === 'function' ? getProps(closeMe, key) : getProps;
+  const props = typeof getProps === 'function' ?
+    getProps(closeMe, key) :
+    (typeof getProps === 'string' ? { message: getProps } : getProps);
   props.timestamp = Date.now();
   props.open = true;
 

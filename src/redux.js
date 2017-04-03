@@ -65,7 +65,7 @@ export const openSnackbar = (key, getProps) => (dispatch) => {
 
   dispatch({
     type: OPEN_SNACKBAR,
-    payload: { key, props },
+    payload: { key, typeof props === 'string' ? { message: props } : props },
   });
 };
 

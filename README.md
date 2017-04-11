@@ -22,7 +22,7 @@ $ npm i -S material-ui redux redux-thunk
 
 Material-UI and Redux are required for obvious reasons. Redux-thunk is needed to dispatch close actions asynchronously when snackbar's _autoHideDuration_ ends or when _onRequestClose_ gets triggered, which makes this library easier to use.
 
-## Usage
+## Setup
 
 ### Add the Reducer to Redux store
 
@@ -44,14 +44,13 @@ const store = createStore(rootReducer, applyMiddleware(thunk));
 
 ### Add the Alerts component to the tree
 
-The second step is to add the `Alerts` component somewhere in your app. Make sure this component is always visible because your snackbars and dialogs will be inside it in the dom tree. This component needs three props: 
-  - `alert`: The `alerts` object from your redux, created on the previous step
-  - `dialog`: Your Material UI `Dialog` component
-  - `snackbar`: Your Material UI `Snackbar` component
+The second step is to add the `Alerts` component somewhere in your app. Make sure this component is always visible because your snackbars and dialogs will be inside it in the dom tree. This component needs to have your `alerts`. There are several ways to do this, these are two of them:
 
 ```JavaScript
 import { connect } from 'react-redux';
 import { Alerts } from 'mui-redux-alerts';
+
+// Example 1 - Unconnected parent
 
 const mapStateToProps = (state) => ({ alerts: state.alerts });
 const ConnectedAlerts = connect(mapStateToProps)(Alerts)
@@ -62,38 +61,80 @@ const App = () => (
     <ConnectedAlerts />
   </div>
 );
+
+export default App;
+
+// Example 2 - Connected parent
+
+const Layout = ({ alerts }) => (
+  <div>
+    // The rest of your app
+    <Alerts alerts={alerts} />
+  </div>
+);
+
+const mapStateToProps = (state) => ({ alerts: state.alerts });
+export default connect(mapStateToProps)(Layout);
 ```
 
-### Dispatch actions to open and close dialogs and snackbars
+## Usage
 
-The last step is to just dispatch `openDialog`, `openSnackbar`, `closeDialog`, `closeSnackbar` actions as needed.
+Now that you are all setup, lets dispatch snackbars and dialogs. All use cases assume the `dispatch` function from Redux store and these:
 
 ```JavaScript
 import { openDialog, openSnackbar, closeDialog, closeSnackbar } from 'mui-redux-alerts';
-
-// You can pass a props object...
-dispatch(openSnackbar('simpleSnackbar', { message: 'Simple Snackbar' }));
-
-// ...or a function that returns the props.
-// This makes it easier to add close buttons inside your dialog
-const getProps = (closeMe) => ({
-  title: 'Pain is an excellent teacher',
-  children: 'Repetition is the path to mastery',
-  actions: [
-    <FlatButton label="OK" onTouchTap={ () => { closeMe(); } />
-  ],
-});
-
-dispatch(openDialog('customDialog', getProps));
-
-// You can also close them manually using the key
-dispatch(closeSnackbar('simpleSnackbar'));
-dispatch(closeDialog('customDialog'));
 ```
 
-## Example
+### Simple Examples
 
-Check the example folder on this repo.
+All you need is an object that will be used as props for your Dialogs/Snackbars. You can see which props you can use on Material-UI documentation for Snackbars and Dialogs. 
+
+> Caveat: It is not necessary to mess with `open` and `onRequestClose` properties. They are filled automatically.
+
+```JavaScript
+dispatch(openSnackbar({ message: 'Simple Snackbar' })); // Click outside to dismiss
+dispatch(openSnackbar({ message: 'Gone in 6 seconds', autoHideDuration: 6000 }));
+dispatch(openDialog({
+    title: 'Simple Dialog',
+    children: 'Click outside or press ESC to close'
+}));
+```
+
+### Dialogs with ID
+
+If you need to close dialogs programatically, you can pass an ID (string) as the optional first argument and dispatch the `closeSnackbar` or `closeDialog` action.
+
+```JavaScript
+dispatch(openSnackbar('mySnackbar', { message: 'Simple Snackbar' }));
+dispatch(openDialog('myDialog', {
+    moda: true,
+    title: 'Simple Dialog',
+    children: "Can't close this."
+}));
+
+// And later
+dispatch(closeSnackbar('mySnackbar'));
+dispatch(closeDialog('myDialog'));
+```
+
+### Using a function for props
+
+If instead of an object you send a function for props, it will be calld with a `close` function as the first argument.
+
+```JavaScript
+const getProps = close => ({
+  modal: true,
+  title: 'Custom Dialog',
+  children: 'Click OK to close.'
+  actions: [<RaisedButton label="OK" onTouchTap={close} />]
+});
+
+dispatch(openDialog(getProps));
+dispatch(openDialog('myCustomDialog', getProps)); // Also works
+
+// Later
+dispatch(closeDialog('myCustomDialog'));
+```
 
 ## Known issues
 

@@ -6,4 +6,4 @@ export {
   openSnackbar,
   closeDialog,
   closeSnackbar,
-} from './redux.js';
+} from './redux';

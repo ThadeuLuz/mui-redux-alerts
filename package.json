@@ -1,5 +1,5 @@
 {
-  "name": "mui-redux-alerts",
+  "name": "@sustainhawaii/mui-redux-alerts",
   "version": "0.2.1",
   "description": "Material-UI + Redux Dialogs and Snackbars",
   "main": "./lib/index.js",

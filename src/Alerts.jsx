@@ -1,4 +1,6 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+
 
 import Snackbar from 'material-ui/Snackbar';
 import Dialog from 'material-ui/Dialog';

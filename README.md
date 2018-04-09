@@ -125,7 +125,7 @@ If instead of an object you send a function for props, it will be calld with a `
 const getProps = close => ({
   modal: true,
   title: 'Custom Dialog',
-  children: 'Click OK to close.'
+  children: 'Click OK to close.',
   actions: [<RaisedButton label="OK" onTouchTap={close} />]
 });
 

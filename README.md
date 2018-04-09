@@ -107,7 +107,7 @@ If you need to close dialogs programatically, you can pass an ID (string) as the
 ```JavaScript
 dispatch(openSnackbar('mySnackbar', { message: 'Simple Snackbar' }));
 dispatch(openDialog('myDialog', {
-    moda: true,
+    modal: true,
     title: 'Simple Dialog',
     children: "Can't close this."
 }));

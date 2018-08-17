@@ -1,6 +1,6 @@
 {
   "name": "mui-redux-alerts",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Material-UI + Redux Dialogs and Snackbars",
   "main": "./lib/index.js",
   "scripts": {
@@ -30,9 +30,11 @@
     "url": "https://github.com/ThadeuLuz/mui-redux-alerts/issues"
   },
   "homepage": "https://github.com/ThadeuLuz/mui-redux-alerts#readme",
-  "dependencies": {},
+  "dependencies": {
+    "@material-ui/core": "^1.5.0"
+  },
   "peerDependencies": {
-    "material-ui": "*",
+    "@material-ui/core": "*",
     "redux": "*",
     "redux-thunk": "*"
   },
@@ -50,9 +52,8 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.3",
-    "material-ui": "^0.17.1",
-    "react": "^15.4.2",
     "prop-types": "^15.6.0",
+    "react": "^15.4.2",
     "rimraf": "^2.6.1"
   }
 }

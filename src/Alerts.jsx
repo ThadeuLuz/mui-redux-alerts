@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 
-import Snackbar from 'material-ui/Snackbar';
-import Dialog from 'material-ui/Dialog';
+import Snackbar from '@material-ui/core/Snackbar';
+import Dialog from '@material-ui/core/Dialog';
 
 const cleanAndOrder = obj => Object.keys(obj)
   .map(key => ({ open: true, key, ...obj[key] }))

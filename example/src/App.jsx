@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import RaisedButton from 'material-ui/RaisedButton';
+import RaisedButton from '@material-ui/core/RaisedButton';
 
 import { connect } from 'react-redux';
 import { openSnackbar, openDialog, Alerts } from '../lib/';

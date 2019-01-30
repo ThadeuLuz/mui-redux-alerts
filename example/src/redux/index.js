@@ -1,8 +1,10 @@
 /* eslint-disable no-underscore-dangle */
-import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
+import {
+  combineReducers, createStore, applyMiddleware, compose,
+} from 'redux';
 import thunk from 'redux-thunk';
 
-import { reducer as alerts } from '../../lib/';
+import { reducer as alerts } from '../../lib';
 
 const rootReducer = combineReducers({
   // Add your other reducers here

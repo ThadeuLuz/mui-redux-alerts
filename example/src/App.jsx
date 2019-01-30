@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import RaisedButton from '@material-ui/core/RaisedButton';
 
 import { connect } from 'react-redux';
-import { openSnackbar, openDialog, Alerts } from '../lib/';
+import { openSnackbar, openDialog, Alerts } from '../lib';
 
 import simpleSnackbar from './alerts/simpleSnackbar';
 import simpleDialog from './alerts/simpleDialog';
@@ -32,8 +32,8 @@ const style = {
 
 
 const App = ({ alerts, dispatch }) => (
-  <div style={style.row} >
-    <div style={style.cell} >
+  <div style={style.row}>
+    <div style={style.cell}>
       <RaisedButton
         primary
         label="Simple Dialog"
@@ -68,7 +68,7 @@ const App = ({ alerts, dispatch }) => (
         }}
       />
     </div>
-    <div style={style.cell} >
+    <div style={style.cell}>
       <RaisedButton
         secondary
         label="Simple Snackbar"

@@ -18,7 +18,7 @@ const style = {
 };
 
 const Alerts = ({ alerts }) => (
-  <div style={style} >
+  <div style={style}>
     {cleanAndOrder(alerts.snackbars).map(p => (<Snackbar {...p} />))}
     {cleanAndOrder(alerts.dialogs).map(p => (<Dialog {...p} />))}
   </div>

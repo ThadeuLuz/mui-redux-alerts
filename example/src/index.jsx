@@ -15,14 +15,13 @@ const rootEl = document.createElement('div');
 rootEl.setAttribute('id', 'app');
 document.body.appendChild(rootEl);
 
-const renderComponent = () =>
-  render(
-    <Provider store={store}>
-      <MuiThemeProvider>
-        <App />
-      </MuiThemeProvider>
-    </Provider>,
-    rootEl,
-  );
+const renderComponent = () => render(
+  <Provider store={store}>
+    <MuiThemeProvider>
+      <App />
+    </MuiThemeProvider>
+  </Provider>,
+  rootEl,
+);
 
 renderComponent();

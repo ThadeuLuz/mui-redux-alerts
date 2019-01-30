@@ -6,7 +6,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import Dialog from '@material-ui/core/Dialog';
 
 const cleanAndOrder = obj => Object.keys(obj)
-  .map(key => ({ open: true, key, ...obj[key] }))
+  .map(key => ({ key, ...obj[key] }))
   .sort((a, b) => (a.timestamp - b.timestamp))
   .map((_p) => { const p = _p; delete p.timestamp; return p; });
 

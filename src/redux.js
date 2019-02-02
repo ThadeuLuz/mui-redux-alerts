@@ -54,7 +54,7 @@ const getKeyProps = (first, second, dispatch, closeAction) => {
   let key;
   let propsOrGetProps;
 
-  // Define key and pogp
+  // Define key and props
   if (typeof first === 'string') {
     key = first;
     propsOrGetProps = second;
@@ -70,18 +70,25 @@ const getKeyProps = (first, second, dispatch, closeAction) => {
 
   const props = typeof propsOrGetProps === 'function' ? propsOrGetProps(close, key) : propsOrGetProps;
 
-  // Set default props
-  props.timestamp = Date.now();
-  props.open = true;
+  const props_ = {
+    ...props,
 
-  // onRequestClose monkey patch
-  const originalOnRequestClose = props.onRequestClose;
-  props.onRequestClose = (buttonClicked) => {
-    close();
-    if (originalOnRequestClose) originalOnRequestClose(buttonClicked);
-  };
+    // Set default props
+    timestamp: Date.now(),
+    open: true,
 
-  return { key, props };
+    // override onClose
+    onClose: (event, reason) => {
+      close();
+
+      // dialog and snackbar have same onClose function arguments
+      // https://material-ui.com/api/snackbar/
+      // https://material-ui.com/api/dialog/#dialog-api
+      if (props.onClose) props.onClose(event, reason);
+    },
+  }
+
+  return { key, props: props_ };
 };
 
 //

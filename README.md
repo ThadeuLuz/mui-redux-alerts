@@ -107,7 +107,7 @@ If you need to close dialogs programatically, you can pass an ID (string) as the
 ```JavaScript
 dispatch(openSnackbar('mySnackbar', { message: 'Simple Snackbar' }));
 dispatch(openDialog('myDialog', {
-    moda: true,
+    modal: true,
     title: 'Simple Dialog',
     children: "Can't close this."
 }));
@@ -125,7 +125,7 @@ If instead of an object you send a function for props, it will be calld with a `
 const getProps = close => ({
   modal: true,
   title: 'Custom Dialog',
-  children: 'Click OK to close.'
+  children: 'Click OK to close.',
   actions: [<RaisedButton label="OK" onTouchTap={close} />]
 });
 
